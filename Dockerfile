@@ -16,5 +16,5 @@ RUN sed -i -e "s/^set(LIBS$/set(LIBS -lboost_system/" /opt/ORB_SLAM2/Examples/RO
 RUN cd /opt/ORB_SLAM2/ && sh build.sh
 RUN LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu/ && \
     ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:/opt/ORB_SLAM2/Examples/ROS/ && \
-    /bin/bash -c "cd /opt/ORB_SLAM2/ && build_ros.sh; build_ros.sh; build_ros.sh"
+    /bin/bash -c "cd /opt/ORB_SLAM2/ && sh build_ros.sh; sh build_ros.sh; sh build_ros.sh"
 
