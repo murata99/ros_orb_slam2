@@ -14,8 +14,7 @@ RUN apt-get install -y mesa-utils libgl1-mesa-swx11
 
 RUN sed -i -e "s/^set(LIBS$/set(LIBS -lboost_system/" /opt/ORB_SLAM2/Examples/ROS/ORB_SLAM2/CMakeLists.txt
 RUN cd /opt/ORB_SLAM2/ && sh build.sh
-RUN cd /opt/ORB_SLAM2/ && \
-    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu/ && \
+RUN LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu/ && \
     ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:/opt/ORB_SLAM2/Examples/ROS/ && \
-    /bin/bash -c "build_ros.sh; build_ros.sh; build_ros.sh"
+    /bin/bash -c "cd /opt/ORB_SLAM2/ && build_ros.sh; build_ros.sh; build_ros.sh"
 
