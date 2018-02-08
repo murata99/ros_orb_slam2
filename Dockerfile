@@ -10,13 +10,13 @@ RUN rosdep update
 RUN echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
 RUN apt-get install -y python-rosinstall python-rosinstall-generator python-wstool build-essential
 
-RUN apt-get install -y mesa-utils libgl1-mesa-swx11
+RUN apt-get install libboost-system-dev
 
 ENV ROS_PACKAGE_PATH ${ROS_PACKAGE_PATH}:/opt/ORB_SLAM2/Examples/ROS/
 ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu/
 
 RUN sed -i -e "s/^set(LIBS$/set(LIBS -lboost_system/" /opt/ORB_SLAM2/Examples/ROS/ORB_SLAM2/CMakeLists.txt
 RUN cd /opt/ORB_SLAM2/ && sh build.sh
-# RUN LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu/ && \
-#     ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:/opt/ORB_SLAM2/Examples/ROS/ && \
-#     /bin/bash -c "cd /opt/ORB_SLAM2/ && sh build_ros.sh; sh build_ros.sh; sh build_ros.sh"
+# RUN cd /opt/ORB_SLAM2/ && sh build_ros.sh
+
+RUN apt-get install -y mesa-utils libgl1-mesa-swx11
