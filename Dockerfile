@@ -17,6 +17,6 @@ ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu/
 
 RUN sed -i -e "s/^set(LIBS$/set(LIBS -lboost_system/" /opt/ORB_SLAM2/Examples/ROS/ORB_SLAM2/CMakeLists.txt
 RUN cd /opt/ORB_SLAM2/ && sh build.sh
-# RUN cd /opt/ORB_SLAM2/ && sh build_ros.sh
+RUN cd /opt/ORB_SLAM2/ && sh build_ros.sh || echo "force success"
 
 RUN apt-get install -y mesa-utils libgl1-mesa-swx11
