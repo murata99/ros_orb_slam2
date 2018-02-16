@@ -1,6 +1,6 @@
 FROM youyu/orb_slam2:latest
 
-RUN apt-get update && apt-get install -y mesa-utils libgl1-mesa-swx11 libglew-dev
+RUN apt-get update && apt-get install -y mesa-utils libgl1-mesa-swx11 && apt-get install -y libglew-dev
 
 RUN apt-get update && apt-get install -y libgd3 libgvc6
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
