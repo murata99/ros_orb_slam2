@@ -12,13 +12,14 @@ RUN rosdep update
 RUN echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
 RUN apt-get install -y python-rosinstall python-rosinstall-generator python-wstool build-essential
 
-RUN apt-get install -y libboost-system-dev
+# RUN apt-get install -y libboost-system-dev
 
-ENV ROS_PACKAGE_PATH ${ROS_PACKAGE_PATH}:/opt/ORB_SLAM2/Examples/ROS/
+# ENV ROS_PACKAGE_PATH ${ROS_PACKAGE_PATH}:/opt/ORB_SLAM2/Examples/ROS/
 ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu/
 
 RUN echo 'export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:/opt/ORB_SLAM2/Examples/ROS/' >> ~/.bashrc
 
 RUN sed -i -e "s/^set(LIBS$/set(LIBS -lboost_system/" /opt/ORB_SLAM2/Examples/ROS/ORB_SLAM2/CMakeLists.txt
-RUN bash -c "cd /opt/ORB_SLAM2/ && sh build.sh"
-RUN bash -c "cd /opt/ORB_SLAM2/ && sh build_ros.sh"
+RUN cd /opt/ORB_SLAM2/ && sh build.sh
+RUN sed -i -E 's/.*return.*/#\0/' ~/.bashrc
+RUN bash -c "source ~/.bashrc && cd /opt/ORB_SLAM2/ && sh build_ros.sh"
