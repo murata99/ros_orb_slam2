@@ -22,15 +22,17 @@ RUN echo 'export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:/opt/ORB_SLAM2/Examples/RO
 RUN sed -i -e "s/^set(LIBS$/set(LIBS -lboost_system/" /opt/ORB_SLAM2/Examples/ROS/ORB_SLAM2/CMakeLists.txt
 RUN cd /opt/ORB_SLAM2/ && sh build.sh
 RUN sed -i -e "s/^make -j$/make -j -k/" /opt/ORB_SLAM2/build_ros.sh
-# RUN bash -c 'source /opt/ros/kinetic/setup.bash && export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:/opt/ORB_SLAM2/Examples/ROS/ && cd /opt/ORB_SLAM2/ && sh build_ros.sh'
+# RUN bash -c ' \
+#     source /opt/ros/kinetic/setup.bash && \
+#     export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:/opt/ORB_SLAM2/Examples/ROS/ && \
+#     cd /opt/ORB_SLAM2/ && sh build_ros.sh'
 
 RUN cd /opt/ORB_SLAM2/Examples && rosws init . /opt/ros/kinetic && yes | rosws set /opt/ORB_SLAM2/Examples/ROS -t .
 RUN echo "source /opt/ORB_SLAM2/Examples/setup.bash" >> ~/.bashrc
 RUN bash -c ' \
     source /opt/ros/kinetic/setup.bash && \
     export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:/opt/ORB_SLAM2/Examples/ROS/ && \
-    cd /opt/ORB_SLAM2/Examples/ROS && rosmake ORB_SLAM2 \
-    '
+    cd /opt/ORB_SLAM2/Examples/ROS && rosmake ORB_SLAM2'
 
 RUN mkdir -p /catkin_ws/src && cd /catkin_ws/src/ && git clone https://github.com/ros-drivers/video_stream_opencv.git
 RUN bash -c ' \
@@ -38,9 +40,8 @@ RUN bash -c ' \
     export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:/opt/ORB_SLAM2/Examples/ROS/ && \
     cd /catkin_ws/src/video_stream_opencv && \
     rosdep update && \
-    rosdep install --from-path /catkin_ws/src/video_stream_opencv --ignore-src \
-    '
-RUN cd /catkin_ws && catkin_make_isolated
+    rosdep install --from-path /catkin_ws/src/video_stream_opencv --ignore-src && \
+    cd /catkin_ws && catkin_make_isolated'
 RUN echo "source /catkin_ws/devel_isolated/setup.bash" >> ~/.bashrc
 
 # RUN apt-get install -y mlocate && updatedb
