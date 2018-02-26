@@ -21,5 +21,5 @@ RUN echo 'export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:/opt/ORB_SLAM2/Examples/RO
 
 RUN sed -i -e "s/^set(LIBS$/set(LIBS -lboost_system/" /opt/ORB_SLAM2/Examples/ROS/ORB_SLAM2/CMakeLists.txt
 RUN cd /opt/ORB_SLAM2/ && sh build.sh
-RUN sed -i -e "s/^make -j$/make -j k/" /opt/ORB_SLAM2/build_ros.sh
+RUN sed -i -e "s/^make -j$/make -j -k/" /opt/ORB_SLAM2/build_ros.sh
 RUN bash -c 'source /opt/ros/kinetic/setup.bash && export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:/opt/ORB_SLAM2/Examples/ROS/ && cd /opt/ORB_SLAM2/ && sh build_ros.sh'
